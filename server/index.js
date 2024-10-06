@@ -1,11 +1,13 @@
-const express = require("express")
-const fileUpload = require("express-fileupload")
-const cors = require("cors")
-require("dotenv").config()
+import express from "express"
+import 'dotenv/config'
+import fileUpload from "express-fileupload"
+import cors from "cors"
+import { upload } from "./middleware/multer.middleware.js";
+import { getUrl } from "./services/cloudinary.js";
 
 const app = express();
 
-app.use(fileUpload());
+// app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cors({
@@ -17,10 +19,14 @@ app.get("/", (req, res) => {
 
 })
 
-app.post("/", (req, res) => {
-    console.log(req?.body);
-    console.log(req?.files);
-    res.json({ result: 'uploading video' })
+app.post("/", upload.single("arya"), async (req, res) => {
+    try {
+        let url = await getUrl(req?.file)
+        res.status(200).json({ url: url, success: true })
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ url: null, success: false })
+    }
 })
 
 console.log(process.env.PORT);
