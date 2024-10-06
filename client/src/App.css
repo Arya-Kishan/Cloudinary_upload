@@ -1,0 +1,31 @@
+form {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: blueviolet;
+  padding: 25px;
+  border-radius: 30px;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  background-color: rgb(34, 2, 63);
+  outline: none;
+  border: none;
+  color: white;
+}
+
+input{
+  padding: 10px;
+  background: transparent;
+  outline: none;
+  border: 2px solid white;
+}
