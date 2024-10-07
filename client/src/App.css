@@ -1,3 +1,33 @@
+.nav {
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: blue;
+}
+
+.nav_head{
+  width: fit-content;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.nav_links {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  justify-content: space-evenly;
+}
+
 form {
   width: 80vw;
   display: flex;
@@ -11,7 +41,7 @@ form {
 div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 
 button {
@@ -23,7 +53,7 @@ button {
   color: white;
 }
 
-input{
+input {
   padding: 10px;
   background: transparent;
   outline: none;

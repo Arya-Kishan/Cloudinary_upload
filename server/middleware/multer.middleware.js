@@ -1,17 +1,11 @@
 import multer from "multer"
-import { fileURLToPath } from 'url';
-import path from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const storage = multer.memoryStorage()
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(process.cwd(), "/tmp"))
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
+const upload = multer({ storage: storage })
 
-export const upload = multer({ storage: storage })
+export const imageUpload = upload.single("image")
+export const audioUpload = upload.single("audio")
+export const videoUpload = upload.single("video")
+export const pdfUpload = upload.single("pdf")
+export const mixUpload = upload.fields([{ name: "image", maxCount: 1 }, { name: "video", maxCount: 1 }, { name: "audio", maxCount: 1 }, { name: "pdf", maxCount: 1 }])

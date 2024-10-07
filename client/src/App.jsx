@@ -1,38 +1,27 @@
 import React, { useState } from 'react'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import './App.css'
+import Home from './pages/Home'
+import VideoUpload from './pages/VideoUpload'
+import AudioUpload from './pages/AudioUpload'
+import ImageUpload from './pages/ImageUpload'
+import Navbar from './components/Navbar'
+import MixUpload from './pages/MixUpload'
 
 const App = () => {
 
-  const [image, setImage] = useState("arya");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(image);
-
-    let formdata = new FormData();
-    formdata.append("arya", image)
-
-    console.log(formdata);
-
-    let res = await fetch(import.meta.env.VITE_SERVER_URL, {
-      method: "post",
-      body: formdata
-    })
-    res = await res.json();
-    console.log(res);
-  }
-
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/image' element={<ImageUpload />} />
+        <Route path='/audio' element={<AudioUpload />} />
+        <Route path='/video' element={<VideoUpload />} />
+        <Route path='/mix' element={<MixUpload />} />
+      </Routes>
+    </BrowserRouter>
 
-      <div>
-        <p> Image</p>
-        <input type="file" name='arya' accept='image/svg' onChange={(e) => setImage(e.target.files[0])} />
-      </div>
-
-      <button>Upload</button>
-
-    </form>
   )
 }
 

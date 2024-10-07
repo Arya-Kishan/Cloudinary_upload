@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from "fs"
+import streamifier from "streamifier"
 
 cloudinary.config({
     cloud_name: 'dwvuqahw2',
@@ -7,24 +7,64 @@ cloudinary.config({
     api_secret: 'x2dEVPTIwie3i9dBNG2-wyCMz1Y'
 });
 
-export const getUrl = async (file) => {
 
-    console.log(file);
-    console.log(file.path);
+export const getImageUrl = async (file) => {
+    let url = await uploadAssesAndGetUrl(file, "image");
+    return url;
+}
+
+export const getVideoUrl = async (file) => {
+    let url = await uploadAssesAndGetUrl(file, "video");
+    return url;
+}
+
+export const getAudioUrl = async (file) => {
+    let url = await uploadAssesAndGetUrl(file, "video");
+    return url;
+}
+
+
+export const uploadAssesAndGetUrl = async (file, type) => {
 
     try {
+        if (file) {
 
-        const cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
-            folder: 'arya_practice'
-        });
-        fs.unlinkSync(file.path)
+            let streamUpload = (file) => {
+                return new Promise((resolve, reject) => {
 
-        return cloudinaryResponse.secure_url;
 
+                    let stream = cloudinary.uploader.upload_stream(
+                        {
+                            resource_type: type,
+                            folder: "arya_practice"
+                        },
+                        (error, result) => {
+                            if (result) {
+                                resolve(result);
+                            } else {
+                                reject(error);
+                            }
+                        }
+                    );
+
+
+                    streamifier.createReadStream(file.buffer).pipe(stream);
+
+                });
+            };
+
+
+            async function upload(file) {
+                let result = await streamUpload(file);
+                console.log(result.secure_url);
+                return result.secure_url;
+            }
+
+            return upload(file);
+        }
     } catch (error) {
-        fs.unlinkSync(file.path)
         console.log(error);
-        console.log("ERROR IN UPLOADING");
+        console.log("inside getEroor of getUrl");
+        return ("CANT GET THE IMAGE URL")
     }
-
 }
