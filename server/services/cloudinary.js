@@ -23,6 +23,10 @@ export const getAudioUrl = async (file) => {
     return url;
 }
 
+export const deleteFile = async (cloudinary_public_id) => {
+    let a = await cloudinary.uploader.destroy(cloudinary_public_id);
+    return a;
+}
 
 export const uploadAssesAndGetUrl = async (file, type) => {
 
@@ -56,8 +60,9 @@ export const uploadAssesAndGetUrl = async (file, type) => {
 
             async function upload(file) {
                 let result = await streamUpload(file);
+                console.log(result);
                 console.log(result.secure_url);
-                return result.secure_url;
+                return { public_id: result.public_id, secure_url: result.secure_url };
             }
 
             return upload(file);

@@ -2,7 +2,7 @@ import multer from "multer"
 
 const storage = multer.memoryStorage()
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage, limits: { fileSize: 2 * 1024 * 1024 } }) //5MB
 
 export const imageUpload = upload.single("image")
 export const audioUpload = upload.single("audio")

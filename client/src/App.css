@@ -12,7 +12,7 @@
   background: blue;
 }
 
-.nav_head{
+.nav_head {
   width: fit-content;
   font-size: 30px;
   font-weight: bold;
@@ -58,4 +58,22 @@ input {
   background: transparent;
   outline: none;
   border: 2px solid white;
+}
+
+.box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 10px;
+  background: blueviolet;
+}
+
+.box button{
+  width: 200px;
+}
+
+img {
+  width: 40px;
 }

@@ -3,11 +3,10 @@ import 'dotenv/config'
 import cors from "cors"
 import async from 'async'
 import { audioUpload, imageUpload, mixUpload, videoUpload } from "./middleware/multer.middleware.js";
-import { getAudioUrl, getImageUrl, getVideoUrl } from "./services/cloudinary.js";
+import { deleteFile, getAudioUrl, getImageUrl, getVideoUrl } from "./services/cloudinary.js";
 
 const app = express();
 
-// app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cors({
@@ -81,18 +80,12 @@ app.post("/mix", mixUpload, async (req, res) => {
 })
 
 
-// app.post("/", mixUpload, async (req, res) => {
-//     try {
-//         console.log(req.body.name);
-//         console.log(req.files);
-
-//         // let url = await getImageUrl(req?.file)
-//         res.status(200).json({ url: "ass", success: true })
-//     } catch (error) {
-//         console.log(error);
-//         res.status(400).json({ url: null, success: false })
-//     }
-// })
+app.delete("/", async (req, res) => {
+    console.log(req.body);
+    let result = await deleteFile(req.body.public_id);
+    console.log(result);
+    res.status(200).json({ url: "delte", success: true, result: result })
+})
 
 console.log(process.env.PORT);
 
